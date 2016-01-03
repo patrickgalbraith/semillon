@@ -1,5 +1,5 @@
 import { CALL_API, Schemas } from '../middleware/api'
-import _ from 'lodash'
+import { get } from 'lodash'
 
 export const POST_REQUEST = 'POST_REQUEST'
 export const POST_SUCCESS = 'POST_SUCCESS'
@@ -83,7 +83,7 @@ function fetchPosts(page) {
     page,
     [CALL_API]: {
       types: [ POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE ],
-      endpoint: `posts`,
+      endpoint: `posts?page=${page}`,
       schema: Schemas.POST_ARRAY
     }
   }
@@ -93,7 +93,7 @@ function fetchPosts(page) {
 export function loadPosts(page = 1) {
   return (dispatch, getState) => {
     const state = getState()
-    const posts = _.get(state, `pagination.posts.archive.ids[${page-1}]`)
+    const posts = get(state, `pagination.posts.archive.ids[${page-1}]`)
 
     if (posts) {
       console.log('Skip fetching posts w/ page', page)

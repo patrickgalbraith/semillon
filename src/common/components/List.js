@@ -18,9 +18,9 @@ export default class List extends Component {
     const { items } = this.props
     return (
       <div className="posts">
-        {items.length && items.map((item) =>
+        {items.length > 0 ? items.map((item) =>
           this.renderArticle(item)
-        )}
+        ) : null}
       </div>
     )
   }
