@@ -4,13 +4,17 @@ import { connect } from 'react-redux'
 import List from '../../components/List'
 import { loadPosts } from '../../actions/posts'
 
-function loadData(props) {
-  props.loadPosts()
-}
-
 class Home extends Component {
+  static fetchData(dispatch, urlParams) {
+    const loadPostsBound = bindActionCreators(loadPosts, dispatch)
+
+    return Promise.all([
+      loadPostsBound()
+    ])
+  }
+
   componentWillMount() {
-    loadData(this.props)
+    this.constructor.fetchData(this.props.dispatch, this.props.params)
   }
 
   render() {
@@ -24,8 +28,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  posts: PropTypes.array.isRequired,
-  loadPosts: PropTypes.func.isRequired
+  posts: PropTypes.array.isRequired
 }
 
 function mapStateToProps(state) {
@@ -40,13 +43,6 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loadPosts: bindActionCreators(loadPosts, dispatch)
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Home)

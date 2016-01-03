@@ -56,6 +56,7 @@ export function loadPostBySlug(slug, requiredFields = []) {
     for (let key in posts) {
       if (posts[key].slug === slug) {
         post = posts[key]
+        break
       }
     }
 

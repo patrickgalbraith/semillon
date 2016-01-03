@@ -5,19 +5,23 @@ import PostHeader from '../../components/PostHeader'
 import Spinner from '../../components/Spinner'
 import { loadPostBySlug } from '../../actions/posts'
 
-export function fetchData(props) {
-  props.loadPost(props.params.post)
-}
-
 class Post extends Component {
+  static fetchData(dispatch, urlParams) {
+    const loadPostBound = bindActionCreators(loadPostBySlug, dispatch)
+
+    return Promise.all([
+      loadPostBound(urlParams.post)
+    ])
+  }
+
   componentWillMount() {
-    fetchData(this.props)
+    this.constructor.fetchData(this.props.dispatch, this.props.params)
   }
 
   render() {
     const {post} = this.props
 
-    if (!post) {
+    if (!post || post.isFetchingFailed) {
       return (
         <h1>Post not found!</h1>
       )
@@ -39,8 +43,7 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-  post: PropTypes.object,
-  loadPost: PropTypes.func.isRequired
+  post: PropTypes.object
 }
 
 function mapStateToProps(state, ownProps) {
@@ -50,6 +53,7 @@ function mapStateToProps(state, ownProps) {
   for (let key in posts) {
     if (posts[key].slug === ownProps.params.post) {
       post = posts[key]
+      break
     }
   }
 
@@ -58,13 +62,6 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    loadPost: bindActionCreators(loadPostBySlug, dispatch)
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Post)

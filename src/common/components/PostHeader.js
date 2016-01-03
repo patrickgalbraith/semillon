@@ -15,7 +15,7 @@ export default class PostHeader extends Component {
           <Link to={post.link} className="comment-count">9</Link>
         </h1>
         <p className="subtitle">Post sub-title</p>
-        <time dateTime={post.dateGmt}>{post.dateGmt}</time>
+        <p className="date"><time dateTime={post.dateGmt}>{post.dateGmt}</time></p>
       </header>
     )
   }

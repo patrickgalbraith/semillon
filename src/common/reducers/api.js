@@ -5,40 +5,45 @@ const initialState = {
 }
 
 function post(state, action) {
+  const { slug, id } = action.initialState
   let newState = { posts: {} }
 
   if (action.type === 'POST_REQUEST') {
-    if (action.initialState.id) {
-      newState.posts[action.initialState.id] = action.initialState
+    if (id) {
+      newState.posts[id] = action.initialState
     }
 
-    if (action.initialState.slug) {
-      newState.posts[action.initialState.slug] = action.initialState
+    if (slug) {
+      newState.posts[slug] = action.initialState
     }
 
     return merge({}, state, newState)
   } else if(action.type === 'POST_FAILURE') {
     newState = merge({}, state)
 
-    if (action.initialState.id) {
-      newState.posts[action.initialState.id].isFetching = false
-      newState.posts[action.initialState.id].isFetchingFailed = true
+    if (id && newState.posts[id]) {
+      newState.posts[id].isFetching = false
+      newState.posts[id].isFetchingFailed = true
     }
 
-    if (action.initialState.slug) {
-      delete newState.posts[action.initialState.slug]
+    if (slug && newState.posts[slug]) {
+      newState.posts[slug].isFetching = false
+      newState.posts[slug].isFetchingFailed = true
     }
 
     return newState
   } else if(action.type === 'POST_SUCCESS') {
     newState = merge({}, state)
 
-    if (action.initialState.id) {
-      newState.posts[action.initialState.id].isFetching = false
+    if (id && newState.posts[id]) {
+      newState.posts[id].isFetching = false
     }
 
-    if (action.initialState.slug) {
-      delete newState.posts[action.initialState.slug]
+    if (action.response.result.length > 0 && slug) {
+      delete newState.posts[slug]
+    } else if(newState.posts[slug]) {
+      newState.posts[slug].isFetching = false
+      newState.posts[slug].isFetchingFailed = true
     }
 
     return newState

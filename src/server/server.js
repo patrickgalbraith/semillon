@@ -3,6 +3,8 @@
 import path from 'path'
 import express from 'express'
 import qs from 'qs'
+import favicon from 'serve-favicon'
+import compression from 'compression'
 
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
@@ -30,7 +32,8 @@ if(__DEVELOPMENT__) {
   app.use(webpackHotMiddleware(compiler))
 }
 
-// Serve static assets
+app.use(compression())
+app.use(favicon(path.join(__dirname, '..', '..', 'static', 'favicon.ico')))
 app.use('/static', express.static('static'))
 
 // This is fired every time the server side receives a request
@@ -60,11 +63,11 @@ function handleRender(req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      Promise.all(renderProps.components)
+      Promise.all(renderProps.components
         .filter(component => component.fetchData)
         .map(component => {
           // have each component dispatch load actions that return promises
-          return component.fetchData(store.dispatch)
+          return component.fetchData(store.dispatch, renderProps.params)
         }))
         .then(() => {
           // after fetchData() has been run on every component the route
@@ -102,6 +105,7 @@ function renderFullPage(html, initialState) {
       </head>
       <body>
         <div id="app">${html}</div>
+        <div id="devtools" class="devtools"></div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
