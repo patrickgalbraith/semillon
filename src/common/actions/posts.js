@@ -1,4 +1,5 @@
 import { CALL_API, Schemas } from '../middleware/api'
+import _ from 'lodash'
 
 export const POST_REQUEST = 'POST_REQUEST'
 export const POST_SUCCESS = 'POST_SUCCESS'
@@ -26,6 +27,7 @@ export function loadPost(id, requiredFields = []) {
     const post = getState().entities.posts[id]
 
     if (post && requiredFields.every(key => post.hasOwnProperty(key))) {
+      console.log('Skip fetching post w/ id', slug)
       return null
     }
 
@@ -63,6 +65,7 @@ export function loadPostBySlug(slug, requiredFields = []) {
     }
 
     if (post && requiredFields.every(key => post.hasOwnProperty(key))) {
+      console.log('Skip fetching post w/ slug', slug)
       return null
     }
 
@@ -90,9 +93,12 @@ function fetchPosts(page) {
 export function loadPosts(page = 1) {
   return (dispatch, getState) => {
     const state = getState()
-    const posts = state.entities.posts
+    const posts = _.get(state, `pagination.posts.archive.ids[${page-1}]`)
 
-    // @TODO handle pagination logic and prevent duplicate api calls
+    if (posts) {
+      console.log('Skip fetching posts w/ page', page)
+      return null
+    }
 
     return dispatch(fetchPosts(page))
   }

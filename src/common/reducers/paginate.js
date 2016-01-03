@@ -27,13 +27,16 @@ export default function paginate({ types, mapActionToKey }) {
           isFetching: true
         })
       case successType:
-        let ids = state.ids.slice(0)
+        let ids = [...state.ids]
+        let fetchedPages = [...state.fetchedPages]
+
         ids[action.page-1] = action.response.result
+        fetchedPages[action.page-1] = action.page
 
         return merge({}, state, {
-          ids: ids, //union(state.ids, action.response.result),
+          ids,
+          fetchedPages,
           isFetching: false,
-          fetchedPages: union(state.fetchedPages, [action.page])
         }, action.response.pagination)
       case failureType:
         return merge({}, state, {
