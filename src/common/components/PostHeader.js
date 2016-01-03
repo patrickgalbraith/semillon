@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import TimeAgo from './TimeAgo'
 
 export default class PostHeader extends Component {
   render() {
@@ -12,10 +13,16 @@ export default class PostHeader extends Component {
               <span dangerouslySetInnerHTML={{__html: post.title.rendered }} />
             </Link>
           </span>
-          <Link to={post.link} className="comment-count">9</Link>
+          {post.commentCount.approved ? (
+            <Link to={post.link} className="comment-count">{post.commentCount.approved}</Link>
+          ) : null}
         </h1>
-        <p className="subtitle">Post sub-title</p>
-        <p className="date"><time dateTime={post.dateGmt}>{post.dateGmt}</time></p>
+        <p className="subtitle">
+          {post.secondaryTitle}
+        </p>
+        <p className="date">
+          <TimeAgo dateTime={post.dateGmt}/>
+        </p>
       </header>
     )
   }

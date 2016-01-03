@@ -4,7 +4,7 @@ import PostHeader from './PostHeader'
 
 export default class List extends Component {
   renderArticle(item) {
-    if(!item.isFetching) {
+    if(!item.isFetching && !item.isFetchingFailed) {
       return (
         <article className={`post post-${item.id}`} key={item.id}>
           <PostHeader post={item} />

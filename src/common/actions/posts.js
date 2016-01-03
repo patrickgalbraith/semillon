@@ -7,6 +7,7 @@ export const POST_FAILURE = 'POST_FAILURE'
 // Relies on API middleware.
 function fetchPost(id) {
   return {
+    id,
     [CALL_API]: {
       types: [ POST_REQUEST, POST_SUCCESS, POST_FAILURE ],
       endpoint: `posts/${id}`,
@@ -35,6 +36,7 @@ export function loadPost(id, requiredFields = []) {
 // Relies on API middleware.
 function fetchPostBySlug(slug) {
   return {
+    slug,
     [CALL_API]: {
       types: [ POST_REQUEST, POST_SUCCESS, POST_FAILURE ],
       endpoint: `posts/?filter[name]=${slug}`,
@@ -71,11 +73,11 @@ export function loadPostBySlug(slug, requiredFields = []) {
 export const POSTS_REQUEST = 'POSTS_REQUEST'
 export const POSTS_SUCCESS = 'POSTS_SUCCESS'
 export const POSTS_FAILURE = 'POSTS_FAILURE'
-export const POSTS_PER_PAGE = 10
 
 // Relies on API middleware.
-function fetchPosts() {
+function fetchPosts(page) {
   return {
+    page,
     [CALL_API]: {
       types: [ POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE ],
       endpoint: `posts`,
@@ -85,13 +87,13 @@ function fetchPosts() {
 }
 
 // Relies on Redux Thunk middleware.
-export function loadPosts(page = 0) {
+export function loadPosts(page = 1) {
   return (dispatch, getState) => {
     const state = getState()
     const posts = state.entities.posts
 
     // @TODO handle pagination logic and prevent duplicate api calls
 
-    return dispatch(fetchPosts())
+    return dispatch(fetchPosts(page))
   }
 }

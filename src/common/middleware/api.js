@@ -1,10 +1,11 @@
 import { Schema, arrayOf, normalize } from 'normalizr'
 import { camelizeKeys } from 'humps'
+import parseLinkHeader from 'parse-link-header'
 import 'isomorphic-fetch'
 
 export const CALL_API = Symbol('CALL_API')
 
-const API_ROOT = 'http://reactwp.loopback.link/wp-json/wp/v2/'
+const API_ROOT = __API_ROOT__
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
@@ -21,9 +22,18 @@ function callApi(endpoint, schema) {
 
       const camelizedJson = camelizeKeys(json)
 
-      return Object.assign({},
+      let result = Object.assign({},
         normalize(camelizedJson, schema)
       )
+
+      const intOrNull = (val) => val === null ? null : parseInt(val, 10)
+
+      result.pagination = {
+        total: intOrNull(response.headers.get('X-WP-Total')),
+        totalPages: intOrNull(response.headers.get('X-WP-TotalPages'))
+      }
+
+      return result
     })
 }
 

@@ -30,19 +30,21 @@ export default (
 
     {/*<Route      component={CustomTaxonomy}   path='/taxonomy(/page/:paged)' />*/}
 
-    <Route      component={Archive}          path='/blog(/page/:paged)' />
-    <Route      component={Post}             path='/blog/:post(/page/:paged)' />
-    <Route      component={Post}             path='/blog/:post/comments(/page/:paged)' />
-    <Route      component={Attachment}       path='/blog/:post/attachment/:attachment' />
-    <Route      component={Attachment}       path='/blog/:post/attachment/:attachment/comments(/page/:paged)' />
-    <Route      component={Archive}          path='/blog/archive/:year/:monthnum/:day(/page/:paged)' />
-    <Route      component={Archive}          path='/blog/archive/:year/:monthnum(/page/:paged)' />
-    <Route      component={Archive}          path='/blog/archive/:year(/page/:paged)' />
+    <Route      component={Page}             path='/portfolio' />
+    <Route      component={Page}             path='/contact' />
 
-    <Route      component={Page}             path='/:page(/page/:paged)' />
-    <Route      component={Page}             path='/:page/comments(/page/:paged)' />
-    <Route      component={Attachment}       path='/:page/attachment/:attachment' />
-    <Route      component={Attachment}       path='/:page/attachment/:attachment/comments(/page/:paged)' />
+    <Route      component={Page}             path='/pages/:page(/page/:paged)' />
+    <Route      component={Page}             path='/pages/:page/comments(/page/:paged)' />
+    <Route      component={Attachment}       path='/pages/:page/attachment/:attachment' />
+    <Route      component={Attachment}       path='/pages/:page/attachment/:attachment/comments(/page/:paged)' />
+
+    <Route      component={Post}             path='/:post(/page/:paged)' />
+    <Route      component={Post}             path='/:post/comments(/page/:paged)' />
+    <Route      component={Attachment}       path='/:post/attachment/:attachment' />
+    <Route      component={Attachment}       path='/:post/attachment/:attachment/comments(/page/:paged)' />
+    <Route      component={Archive}          path='/archive/:year/:monthnum/:day(/page/:paged)' />
+    <Route      component={Archive}          path='/archive/:year/:monthnum(/page/:paged)' />
+    <Route      component={Archive}          path='/archive/:year(/page/:paged)' />
 
     <Route path="*" component={NotFound}/>
   </Route>

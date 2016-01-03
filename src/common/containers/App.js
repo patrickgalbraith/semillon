@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Header from './Header'
 import Introduction from '../components/Introduction'
+import Footer from '../components/Footer'
 
 export default class App extends Component {
   render() {
@@ -13,6 +14,8 @@ export default class App extends Component {
           <Introduction />
 
           {children}
+
+          <Footer />
         </div>
       </div>
     )

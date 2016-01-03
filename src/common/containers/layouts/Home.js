@@ -38,6 +38,10 @@ function mapStateToProps(state) {
     posts.push(Object.assign({}, state.entities.posts[key]))
   }
 
+  posts.sort((a, b) => {
+    return new Date(a.dateGmt) < new Date(b.dateGmt) ? 1 : -1
+  })
+
   return {
     posts: posts
   }
