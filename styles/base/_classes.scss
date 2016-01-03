@@ -1,0 +1,173 @@
+/* Buttons */
+.btn {
+  font-size: 1.3em;
+  line-height: 1;
+  padding: 0.8em 2.2em;
+  display: inline-block;
+  text-align: center;
+  border: 2px solid #aaaaaa;
+  color: #000f1e;
+  background: none;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: $sans-serif-font;
+  transition: color 0.2s, background 0.2s, border 0.2s;
+
+  &:hover {
+    background: #000f1e;
+    border-color: #000f1e;
+    color: white;
+  }
+
+  &.btn-invert {
+    background: #000f1e;
+    border-color: #000f1e;
+    color: white;
+
+    &:hover {
+      border-color: #aaaaaa;
+      color: #000f1e;
+      background: none;
+    }
+  }
+
+  &.btn-small {
+    font-size: 1em;
+  }
+}
+
+/* Notifications */
+.alert {
+  background: #f7f7f7;
+  padding: 20px;
+  font-family: $sans-serif-font;
+  text-align: center;
+  margin: 3.5em 0;
+  border: 1px solid #bcbcbc;
+  border-radius: 3px;
+  color: #000f1e;
+
+  h4 {
+    font-size: 1.8em;
+    text-transform: none;
+    margin: 0 0 0.5em 0;
+    line-height: 1;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 1.4em;
+    margin: 0.5em 0 0 0;
+    line-height: 1.4;
+  }
+
+  * {
+    color: inherit;
+  }
+
+  &.error {
+    background-color: #f8e8e9;
+    border-color: red;
+    color: #b90b0e;
+  }
+}
+
+/* Alignment */
+.alignright {
+  float: right;
+}
+.alignleft {
+  float: left;
+}
+.alignnone,
+.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+img.alignright {
+  margin: 0 0 1em 3em;
+}
+img.alignleft {
+  margin: 0 3em 1em 0;
+}
+img.alignnone,
+img.aligncenter {
+  margin: 0 auto 1em auto;
+}
+
+img.alignleft,
+img.aligncenter,
+img.alignright {
+  @media all and (max-width: #{$tablet-width}) {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* WP-Caption */
+.wp-caption {
+  line-height: 18px;
+  margin-bottom: 20px;
+  max-width: 100%;
+  text-align: center;
+
+  > a {
+    display: block;
+    font-size: 0;
+    line-height: 1;
+  }
+
+  &.alignleft {
+    margin: 0 3em 1em 0;
+  }
+
+  &.alignright {
+    margin: 0 0 1em 3em;
+  }
+
+  .wp-caption-text {
+    display: block;
+    border: 1px solid #E4E2E2;
+    margin: 8px 5px;
+    padding: 1em 0;
+    font-family: $sans-serif-font;
+  }
+}
+
+/* Note (Shortcode) */
+.note {
+  font-size: 1.4em;
+  font-style: italic;
+  font-weight: 100;
+  margin: 2em 0;
+  line-height: 1.8;
+}
+
+/* Badge (Shortcode) */
+.badge {
+  background: #C5C6CB;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: white;
+
+  &.error {
+    background: rgb(206, 91, 91);
+  }
+
+  &.success {
+    background: rgb(96, 202, 138);
+  }
+
+  &.light {
+    background: #EEEEF0;
+    color: rgb(38, 38, 53);
+  }
+}
+
+/* Navigation */
+.paging-navigation {
+  text-align: center;
+}

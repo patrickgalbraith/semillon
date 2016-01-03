@@ -1,0 +1,155 @@
+/****************************/
+/*      LAYOUT      */
+/****************************/
+
+@mixin column ($amount, $count, $gutter:0%) {
+  width: (100% / ($count / $amount)) - $gutter;
+
+  @if $gutter > 0 {
+    margin-right: $gutter + ($gutter / (($count - 1) / $amount));
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+@mixin fill-at ($width, $margin: 0 0 40px 0) {
+  @media all and (max-width: $width) {
+    width: 100% !important;
+    display: block;
+    margin: $margin;
+  }
+}
+
+%fill {
+  width: 100% !important;
+  display: block;
+}
+
+$grid-text-numbers: (
+  'one', 'two', 'three', 'four', 'five',
+  'six', 'seven', 'eight', 'nine', 'ten',
+  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen',
+  'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty'
+);
+
+@mixin generate-columns ($key, $count, $gutter:0%, $pref:'') {
+  @for $i from 1 through $count {
+    @if $i == 1 {
+      #{$pref}.#{$key},
+      #{$pref}.col-#{$i}-#{$count},
+      #{$pref}.#{nth($grid-text-numbers, $i)}-#{$key} {
+        @include column($i, $count, $gutter);
+      }
+    } @else {
+      #{$pref}.col-#{$i}-#{$count},
+      #{$pref}.#{nth($grid-text-numbers, $i)}-#{$key},
+      #{$pref}.#{nth($grid-text-numbers, $i)}-#{$key}s {
+        @include column($i, $count, $gutter);
+      }
+    }
+  }
+}
+
+.pull-left {
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+
+%clearfix,
+.clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+%row,
+.row {
+  @extend %clearfix;
+  width: 100%;
+  font-size: 0;
+
+  > * {
+    font-size: $font-size-base;
+  }
+
+  > .row {
+    font-size: 0;
+  }
+}
+
+.fill-mobile {
+  @include fill-at($mobile-width);
+}
+
+.fill-tablet {
+  @include fill-at($tablet-width);
+}
+
+.halign-center {
+  text-align: center;
+}
+.halign-left {
+  text-align: left;
+}
+.halign-right {
+  text-align: right;
+}
+
+.valign-top {
+  vertical-align: top;
+}
+.valign-middle {
+  vertical-align: middle;
+}
+.valign-middle {
+  vertical-align: bottom;
+}
+
+@media all and (max-width: $mobile-width) {
+  .hide-mobile {
+    display: none;
+  }
+}
+@media all and (max-width: $tablet-width) {
+  .hide-tablet {
+    display: none;
+  }
+}
+@media all and (min-width: $tablet-width + 1) {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+.col,
+%col {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+}
+
+.col-1-2,
+.half {
+  @include column(1, 2);
+}
+
+@include generate-columns('third', 3);
+@include generate-columns('fourth', 4);
+@include generate-columns('fifth', 5);
+@include generate-columns('sixth', 6);
+@include generate-columns('seventh', 7);
+@include generate-columns('eighth', 8);
+@include generate-columns('ninth', 9);
+@include generate-columns('tenth', 10);
+@include generate-columns('eleventh', 11);
+@include generate-columns('twelfth', 12);
+@include generate-columns('thirteen', 13);
+@include generate-columns('fourteenth', 14);
+@include generate-columns('fithteen', 15);
+@include generate-columns('sixteenth', 16);

@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: $serif-font;
+}
+
+.outer-container {
+  max-width: 1290px;
+  margin: 0 auto;
+  padding-top: 56px;
+
+  @media all and (max-width: 1350px) {
+    max-width: none;
+    width: 95%;
+  }
+}

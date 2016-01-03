@@ -1,0 +1,186 @@
+p {
+  font-size: 1.6em;
+  word-wrap: break-word;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: black;
+}
+
+abbr {
+  cursor: help;
+}
+
+ins {
+  background: #ffc;
+  text-decoration: none;
+}
+
+code {
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+}
+
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  clear: both;
+}
+
+h1 {
+  font-size: 2.8em;
+}
+h2 {
+  font-size: 2.4em;
+}
+h3 {
+  font-size: 2.3em;
+  font-weight: 900;
+}
+h4,
+h5,
+h6 {
+  font-family: $sans-serif-font;
+  font-size: 2.2em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+h4 {
+  font-family: $sans-serif-font;
+  font-weight: 700;
+}
+h5 {
+  font-family: $sans-serif-font;
+  font-weight: normal;
+}
+h6 {
+  font-family: $sans-serif-font;
+  font-weight: 100;
+}
+
+
+/* List Styling */
+ol, ul, blockquote {
+  margin-left: 25px;
+  font-size: 1.6em;
+}
+
+ol, ul {
+  list-style-type: circle;
+  list-style-position: inside;
+
+  ol, ul {
+    font-size: 1em;
+    font-style: italic;
+    margin-bottom: 0;
+  }
+}
+ol {
+  list-style-type: decimal;
+
+  ol {
+    list-style-type: lower-latin;
+  }
+}
+
+/* Horizontal Rule */
+hr {
+  margin: 30px 0;
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  max-width: 708px;
+  margin-left: auto;
+  margin-right: auto;
+
+  &.wide {
+    max-width: none;
+  }
+}
+
+/* Blockquote */
+blockquote {
+  margin: 20px 0;
+  padding: 2px 25px 2px 0;
+  font-style:italic;
+  border-left: 2px solid #eee;
+
+  p {
+    padding-left: 25px;
+    font-size: 1.2em;
+  }
+}
+
+
+/* Table Styling */
+table {
+  border-top: 1px solid #b4b4b4;
+  border-left: 1px solid #b4b4b4;
+  font-size: 1.4em;
+
+  th {
+    background: #efefef;
+    font-family: $sans-serif-font;
+  }
+
+  td, th {
+    border-bottom: 1px solid #b4b4b4;
+    border-right: 1px solid #b4b4b4;
+    padding: 5px 7px;
+  }
+}
+
+
+/* Definition List */
+dl {
+  dt {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 1.6em;
+  }
+
+  dd {
+    padding: 0;
+    font-size: 1.6em;
+  }
+}
+
+dl.doc {
+  margin: 2.8em 0;
+
+  dt {
+    font-size: 1.8em;
+    font-weight: 900;
+
+    &:nth-child(n+2) {
+      font-size: 1.6em;
+      font-weight: 100;
+      font-family: $sans-serif-font;
+    }
+  }
+
+  dd {
+    padding-left: 0 !important;
+  }
+}
+
+/* Code Block */
+pre {
+  background: #fbfbfb;
+  font-size: 1.4em;
+  padding: 25px;
+  line-height: 1.4;
+
+  &.hljs-pre {
+    padding: 0;
+
+    > code {
+      padding: 1.8em;
+    }
+  }
+}

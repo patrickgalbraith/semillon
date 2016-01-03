@@ -1,0 +1,169 @@
+.section-title {
+  padding: 40px 0;
+  text-align: center;
+
+  h2 {
+    font-size: 2.8em;
+    font-family: $sans-serif-font;
+    font-weight: 900;
+  }
+}
+
+.post,
+.page {
+  @extend %clearfix;
+
+  .post-header {
+    margin: 60px 0;
+    padding: 0 45px;
+    text-align: center;
+    text-transform: uppercase;
+
+    a {
+      text-decoration: none;
+    }
+
+    .title {
+      display: inline-block;
+      position: relative;
+      margin: 0 auto;
+      font-size: 2.8em;
+      font-weight: 900;
+      font-family: $sans-serif-font;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-style: italic;
+      font-size: 2.3em;
+      text-transform: none;
+    }
+
+    .date {
+      font-size: 1.4em;
+      color: #b6b6b6;
+      font-style: italic;
+      text-transform: none;
+      margin: 0;
+      margin-top: 6px;
+    }
+
+    .comment-count {
+      position: absolute;
+      font-weight: normal;
+      top: 7px;
+      right: -41px;
+      font-size: 10px;
+      font-family: $serif-font;
+      padding-top: 6px;
+      color: black;
+      text-decoration: none;
+      width: 31px;
+      text-align: center;
+
+      &:after {
+        @extend %flaticon;
+        @extend %flaticon-bubble;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 2.4em;
+        color: #d6d6d6;
+      }
+
+      @media all and (max-width: #{$mobile-width}) {
+        display: none;
+      }
+    }
+  }
+
+  .post-body {
+    line-height: 2;
+    max-width: 1130px;
+    margin: 0 auto;
+
+    @media all and (min-width: $mobile-width) {
+      text-align: justify;
+    }
+
+    > p,
+    table,
+    h2, h3, h4, h5, h6,
+    ul, ol,
+    dt, dd,
+    form {
+      max-width: $post-width;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .alert,
+    blockquote {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    dd {
+      padding-left: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    > img {
+      display: block;
+      margin: 30px auto;
+    }
+
+    .row {
+      max-width: $post-width;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .col {
+      &.col-1-2,
+      &.half {
+        @include column(1, 2, 3%);
+      }
+
+      @include generate-columns('third', 3, 3%, '&');
+      @include generate-columns('fourth', 4, 3%, '&');
+
+      @media all and (max-width: 680px) {
+        width: 100% !important;
+        display: block !important;
+        margin-right: 0 !important;
+      }
+    }
+  }
+}
+
+.page {
+  .date {
+    display: none;
+  }
+
+  &.page-template-page-contact {
+    .post-body {
+      text-align: center;
+
+      input, textarea {
+        max-width: 90%;
+      }
+
+      .wpcf7-quiz {
+        max-width: 80px;
+      }
+
+      .wpcf7-submit {
+        @extend .btn;
+        @extend .btn-invert;
+        @extend .btn-small;
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+
+$mobile-width: 480px;
+$tablet-width: 768px;
+
+$post-width: 708px;
+
+$font-size-base: 10px;
+
+$serif-font: 'Merriweather', serif;
+$sans-serif-font: 'Open Sans', Arial, sans-serif;
+$title-font: 'Abril Fatface', serif;
+
+@import 'base/reset';
+@import 'base/layout';
+@import 'base/icons';
+@import 'base/base';
+@import 'base/elements';
+@import 'base/classes';
+@import 'base/devtools';
+
+@import 'template/gallery';
+@import 'template/header';
+@import 'template/footer';
+@import 'template/home';
+@import 'template/post';
+@import 'template/comments';
+@import 'template/portfolio';

@@ -1,0 +1,44 @@
+{
+  "name": "reactwp-client",
+  "version": "0.0.0",
+  "description": "An example of a universally-rendered Redux application",
+  "scripts": {
+    "start": "node src/server/index.js"
+  },
+  "dependencies": {
+    "babel": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "express": "^4.13.3",
+    "history": "^1.17.0",
+    "humps": "^1.0.0",
+    "isomorphic-fetch": "^2.2.0",
+    "lodash": "^3.10.1",
+    "normalizr": "^1.4.0",
+    "qs": "^6.0.1",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.3",
+    "react-router": "^1.0.2",
+    "redux": "^3.0.5",
+    "redux-simple-router": "^1.0.2",
+    "redux-thunk": "^1.0.2",
+    "serve-static": "^1.10.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.21",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-runtime": "^6.3.19",
+    "node-sass": "^3.4.2",
+    "react-transform-hmr": "^1.0.1",
+    "redux-devtools": "^3.0.0",
+    "redux-devtools-dock-monitor": "^1.0.1",
+    "redux-devtools-log-monitor": "^1.0.1",
+    "webpack": "^1.12.9",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.6.0"
+  }
+}
