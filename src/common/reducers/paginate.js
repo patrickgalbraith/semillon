@@ -26,10 +26,10 @@ export default function paginate({ types, mapActionToKey }) {
           isFetching: true
         })
       case successType:
-        let ids = [...state.ids]
+        let ids          = [...state.ids]
         let fetchedPages = [...state.fetchedPages]
 
-        ids[action.page-1] = action.response.result
+        ids         [action.page-1] = action.response.result
         fetchedPages[action.page-1] = action.page
 
         return merge({}, state, {
