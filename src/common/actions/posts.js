@@ -27,7 +27,6 @@ export function loadPost(id, requiredFields = []) {
     const post = getState().entities.posts[id]
 
     if (post && requiredFields.every(key => post.hasOwnProperty(key))) {
-      console.log('Skip fetching post w/ id', slug)
       return null
     }
 
@@ -65,7 +64,6 @@ export function loadPostBySlug(slug, requiredFields = []) {
     }
 
     if (post && requiredFields.every(key => post.hasOwnProperty(key))) {
-      console.log('Skip fetching post w/ slug', slug)
       return null
     }
 
@@ -96,7 +94,6 @@ export function loadPosts(page = 1) {
     const posts = get(state, `pagination.posts.archive.ids[${page-1}]`)
 
     if (posts) {
-      console.log('Skip fetching posts w/ page', page)
       return null
     }
 

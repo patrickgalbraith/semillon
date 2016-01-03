@@ -25,7 +25,6 @@ class Home extends Component {
     const newPaged = +get(nextProps, 'params.paged', 1)
 
     if (paged !== newPaged) {
-      console.log('fetch1')
       this.constructor.fetchData(this.props.dispatch, nextProps.params)
     }
   }
