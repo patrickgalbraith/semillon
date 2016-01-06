@@ -11,7 +11,7 @@ function fetchPost(id) {
     id,
     [CALL_API]: {
       types: [ POST_REQUEST, POST_SUCCESS, POST_FAILURE ],
-      endpoint: `posts/${id}`,
+      endpoint: `wp/v2/posts/${id}`,
       schema: Schemas.POST,
       initialState: {
         id: id,
@@ -40,7 +40,7 @@ function fetchPostBySlug(slug) {
     slug,
     [CALL_API]: {
       types: [ POST_REQUEST, POST_SUCCESS, POST_FAILURE ],
-      endpoint: `posts/?filter[name]=${slug}`,
+      endpoint: `wp/v2/posts/?filter[name]=${slug}`,
       schema: Schemas.POST_ARRAY,
       initialState: {
         slug: slug,
@@ -81,7 +81,7 @@ function fetchPosts(page) {
     page,
     [CALL_API]: {
       types: [ POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE ],
-      endpoint: `posts?page=${page}`,
+      endpoint: `wp/v2/posts?page=${page}`,
       schema: Schemas.POST_ARRAY
     }
   }
