@@ -30,12 +30,12 @@ Start the development server:
 $ npm start
 ```
 
-Builds sass files *(requires sass cli)*:
+Build sass files *(requires sass cli)*:
 ```sh
 $ npm run sass
 ```
 
-Watches sass files for changes *(requires sass cli)*:
+Watch sass files for changes *(requires sass cli)*:
 ```sh
 $ npm run sass-watch
 ```
