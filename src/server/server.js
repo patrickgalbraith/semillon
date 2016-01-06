@@ -40,7 +40,7 @@ app.use('/static', express.static('static'))
 app.use(handleRender)
 
 function handleRender(req, res) {
-  if(__DISABLE_SSR__) {
+  if(__DISABLE_SSR__ === 'yes') {
     return res.send(renderFullPage("", {}))
   }
 
