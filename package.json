@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "An example of a universally-rendered Redux application",
   "scripts": {
-    "start": "node src/server/index.js"
+    "start": "node src/server/index.js",
+    "sass": "sass --style=compressed --sourcemap=file styles/main.scss static/main.css",
+    "sass-watch": "sass --style=compressed --sourcemap=file --watch styles/main.scss:static/main.css"
   },
   "dependencies": {
     "babel": "^6.3.13",
