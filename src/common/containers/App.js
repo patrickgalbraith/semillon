@@ -11,7 +11,7 @@ export default class App extends Component {
         <Header />
 
         <div className="outer-container">
-          <Introduction />
+          <Introduction title={__SITE_NAME__} subTitle={__SITE_TAGLINE__} />
 
           {children}
 

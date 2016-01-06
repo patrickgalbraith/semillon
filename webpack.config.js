@@ -17,8 +17,10 @@ let config = {
     new webpack.DefinePlugin({
       "process.env": {
         // Define environment variables here that need to be accessed by the client
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        API_ROOT: JSON.stringify(process.env.API_ROOT)
+        NODE_ENV:     JSON.stringify(process.env.NODE_ENV),
+        API_ROOT:     JSON.stringify(process.env.API_ROOT),
+        SITE_NAME:    JSON.stringify(process.env.SITE_NAME),
+        SITE_TAGLINE: JSON.stringify(process.env.SITE_TAGLINE),
       }
     })
   ],
