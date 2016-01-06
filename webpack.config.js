@@ -13,7 +13,14 @@ let config = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        // Define environment variables here that need to be accessed by the client
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        API_ROOT: JSON.stringify(process.env.API_ROOT)
+      }
+    })
   ],
   module: {
     loaders: [
