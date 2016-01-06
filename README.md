@@ -12,3 +12,30 @@ Modern WordPress theme using:
 - and more...
 
 ![Screenshot](http://i.imgur.com/GHabSbP.png)
+
+## Building & Running
+
+Install dependencies:
+```sh
+$ npm install
+```
+
+Create .env file (make sure you update it with your settings):
+```sh
+$ cp .env.example .env
+```
+
+Start the development server:
+```sh
+$ npm start
+```
+
+Builds sass files *(requires sass cli)*:
+```sh
+$ npm run sass
+```
+
+Watches sass files for changes *(requires sass cli)*:
+```sh
+$ npm run sass-watch
+```
