@@ -1,7 +1,13 @@
 {
-  "name": "reactwp-client",
-  "version": "0.0.0",
-  "description": "An example of a universally-rendered Redux application",
+  "name": "wp-semillon-theme",
+  "version": "0.1.0",
+  "description": "React/Redux WordPress theme",
+  "license" : "MIT",
+  "author": {
+    "name" : "Patrick Galbraith",
+    "url" : "http://pjgalbraith.com/"
+  },
+  "repository": "patrickgalbraith/semillon",
   "scripts": {
     "start": "node src/server/index.js",
     "sass": "sass --style=compressed --sourcemap=file styles/main.scss static/main.css",
