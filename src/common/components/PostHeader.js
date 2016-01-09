@@ -21,7 +21,7 @@ export default class PostHeader extends Component {
           {post.secondaryTitle}
         </p>
         <p className="date">
-          <TimeAgo dateTime={post.dateGmt}/>
+          <TimeAgo dateTime={post.date}/>
         </p>
       </header>
     )

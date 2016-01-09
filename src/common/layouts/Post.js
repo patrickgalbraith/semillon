@@ -2,15 +2,16 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PostHeader from '../components/PostHeader'
+import CommentsArea from '../components/CommentsArea'
 import Spinner from '../components/Spinner'
 import { loadPostBySlug } from '../actions/posts'
 
 class Post extends Component {
   static fetchData(dispatch, urlParams) {
-    const loadPostBound = bindActionCreators(loadPostBySlug, dispatch)
+    const _loadPost = bindActionCreators(loadPostBySlug, dispatch)
 
     return Promise.all([
-      loadPostBound(urlParams.post)
+      _loadPost(urlParams.post)
     ])
   }
 
@@ -18,8 +19,25 @@ class Post extends Component {
     this.constructor.fetchData(this.props.dispatch, this.props.params)
   }
 
+  getPostClasses(post) {
+    let classes = [
+      'post',
+      'post-'+post.id,
+      'type-'+post.type,
+      'status-'+post.status,
+      'format-'+post.format,
+      'hentry'
+    ]
+
+    if(post.featuredImage) {
+      classes.push('has-post-thumbnail')
+    }
+
+    return classes.join(' ')
+  }
+
   render() {
-    const {post} = this.props
+    const {post, comments} = this.props
 
     if (!post || post.isFetchingFailed) {
       return (
@@ -27,17 +45,24 @@ class Post extends Component {
       )
     }
 
-    if (post.isFetching) {
+    const excerpt = post.excerpt ? post.excerpt.rendered : null
+    const content = post.content ? post.content.rendered : excerpt
+
+    if (post.isFetching && !excerpt) {
       return (
         <Spinner />
       )
     }
 
     return (
-      <article className={`post post-${post.id}`} key={post.id}>
-        <PostHeader post={post} />
-        <section className="post-body" itemProp="articleBody" dangerouslySetInnerHTML={{__html: post.content.rendered }} />
-      </article>
+      <div>
+        <article className={this.getPostClasses(post)} key={post.id}>
+          <PostHeader post={post} />
+          <section className="post-body" itemProp="articleBody" dangerouslySetInnerHTML={{__html: content }} />
+        </article>
+
+        <CommentsArea comments={comments} />
+      </div>
     )
   }
 }
@@ -48,7 +73,10 @@ Post.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   const posts = state.entities.posts
+  const comments = state.entities.comments
+
   let post = null
+  let postComments = []
 
   for (let key in posts) {
     if (posts[key].slug === ownProps.params.post) {
@@ -57,8 +85,17 @@ function mapStateToProps(state, ownProps) {
     }
   }
 
+  if(post) {
+    for (let key in comments) {
+      if (comments[key].post === post.id) {
+        postComments.push(comments[key])
+      }
+    }
+  }
+
   return {
-    post
+    post,
+    comments: postComments
   }
 }
 
