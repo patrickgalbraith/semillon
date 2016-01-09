@@ -1,7 +1,7 @@
-import { Schema, arrayOf, normalize } from 'normalizr'
-import { camelizeKeys } from 'humps'
+import { Schema, arrayOf } from 'normalizr'
 import parseLinkHeader from 'parse-link-header'
 import 'isomorphic-fetch'
+import { normalizeApiResponse } from '../helpers/wordpressApiResponse'
 
 export const CALL_API = Symbol('CALL_API')
 
@@ -20,36 +20,33 @@ function callApi(endpoint, schema) {
         return Promise.reject(json)
       }
 
-      const camelizedJson = camelizeKeys(json)
-
-      let result = Object.assign({},
-        normalize(camelizedJson, schema)
-      )
-
-      const intOrNull = (val) => val === null ? null : parseInt(val, 10)
-
-      result.pagination = {
-        total: intOrNull(response.headers.get('X-WP-Total')),
-        totalPages: intOrNull(response.headers.get('X-WP-TotalPages'))
-      }
-
-      return result
+      return normalizeApiResponse(schema, json, response)
     })
 }
 
-const userSchema = new Schema('users', {
-  idAttribute: 'id'
-})
+// Schemas
+const userSchema = new Schema('users')
+const postSchema = new Schema('posts')
+const commentSchema = new Schema('comments')
+const mediaSchema = new Schema('media')
+const termSchema = new Schema('terms')
 
-const postSchema = new Schema('posts', {
-  idAttribute: 'id'
+postSchema.define({
+  embedded: {
+    author: arrayOf(userSchema),
+    replies: arrayOf(commentSchema),
+    "https://api.w.org/featuredmedia": arrayOf(mediaSchema),
+    "https://api.w.org/term": arrayOf(termSchema)
+  }
 })
 
 export const Schemas = {
   USER: userSchema,
   USER_ARRAY: arrayOf(userSchema),
   POST: postSchema,
-  POST_ARRAY: arrayOf(postSchema)
+  POST_ARRAY: arrayOf(postSchema),
+  COMMENT: commentSchema,
+  COMMENT_ARRAY: arrayOf(commentSchema)
 }
 
 // A Redux middleware that interprets actions with CALL_API info specified.
@@ -62,7 +59,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI
-  const { schema, types, initialState } = callAPI
+  const { schema, types } = callAPI
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -89,20 +86,17 @@ export default store => next => action => {
 
   const [ requestType, successType, failureType ] = types
   next(actionWith({
-    type: requestType,
-    initialState
+    type: requestType
   }))
 
   return callApi(endpoint, schema).then(
     response => next(actionWith({
       response,
-      type: successType,
-      initialState
+      type: successType
     })),
     error => next(actionWith({
       type: failureType,
-      error: error.message || 'Something bad happened',
-      initialState
+      error: error.message || 'Something bad happened'
     }))
   )
 }

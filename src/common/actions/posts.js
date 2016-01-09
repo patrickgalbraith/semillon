@@ -11,18 +11,18 @@ function fetchPost(id) {
     id,
     [CALL_API]: {
       types: [ POST_REQUEST, POST_SUCCESS, POST_FAILURE ],
-      endpoint: `wp/v2/posts/${id}`,
-      schema: Schemas.POST,
-      initialState: {
-        id: id,
-        isFetching: true
-      }
+      endpoint: `wp/v2/posts/${id}/?_embed`,
+      schema: Schemas.POST
+    },
+    initialState: {
+      id: id,
+      isFetching: true
     }
   }
 }
 
 // Relies on Redux Thunk middleware.
-export function loadPost(id, requiredFields = []) {
+export function loadPost(id, requiredFields = [ 'content' ]) {
   return (dispatch, getState) => {
     const post = getState().entities.posts[id]
 
@@ -40,18 +40,18 @@ function fetchPostBySlug(slug) {
     slug,
     [CALL_API]: {
       types: [ POST_REQUEST, POST_SUCCESS, POST_FAILURE ],
-      endpoint: `wp/v2/posts/?filter[name]=${slug}`,
-      schema: Schemas.POST_ARRAY,
-      initialState: {
-        slug: slug,
-        isFetching: true
-      }
+      endpoint: `wp/v2/posts/?_embed&filter[name]=${slug}`,
+      schema: Schemas.POST_ARRAY
+    },
+    initialState: {
+      slug: slug,
+      isFetching: true
     }
   }
 }
 
 // Relies on Redux Thunk middleware.
-export function loadPostBySlug(slug, requiredFields = []) {
+export function loadPostBySlug(slug, requiredFields = [ 'content' ]) {
   return (dispatch, getState) => {
     const posts = getState().entities.posts
     let post = null
@@ -81,7 +81,7 @@ function fetchPosts(page) {
     page,
     [CALL_API]: {
       types: [ POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE ],
-      endpoint: `wp/v2/posts?page=${page}`,
+      endpoint: `wp/v2/posts?page=${page}&context=embed`,
       schema: Schemas.POST_ARRAY
     }
   }
