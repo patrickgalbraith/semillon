@@ -2,14 +2,14 @@ import React                 from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App         from './containers/App'
-import Home        from './containers/layouts/Home'
-import Attachment  from './containers/layouts/Attachment'
-import Search      from './containers/layouts/Search'
-import Author      from './containers/layouts/Author'
-import Archive     from './containers/layouts/Archive'
-import Post        from './containers/layouts/Post'
-import Page        from './containers/layouts/Page'
-import NotFound    from './containers/layouts/NotFound'
+import Home        from './layouts/Home'
+import Attachment  from './layouts/Attachment'
+import Search      from './layouts/Search'
+import Author      from './layouts/Author'
+import Archive     from './layouts/Archive'
+import Post        from './layouts/Post'
+import Page        from './layouts/Page'
+import NotFound    from './layouts/NotFound'
 
 export default (
   <Route        component={App}              path='/'>

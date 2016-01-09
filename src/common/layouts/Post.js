@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import PostHeader from '../../components/PostHeader'
-import Spinner from '../../components/Spinner'
-import { loadPostBySlug } from '../../actions/posts'
+import PostHeader from '../components/PostHeader'
+import Spinner from '../components/Spinner'
+import { loadPostBySlug } from '../actions/posts'
 
 class Post extends Component {
   static fetchData(dispatch, urlParams) {

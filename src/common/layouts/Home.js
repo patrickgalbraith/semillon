@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { get } from 'lodash'
-import List from '../../components/List'
-import Pagination from '../../components/Pagination'
-import { loadPosts } from '../../actions/posts'
+import List from '../components/List'
+import Pagination from '../components/Pagination'
+import { loadPosts } from '../actions/posts'
 
 class Home extends Component {
   static fetchData(dispatch, urlParams) {
