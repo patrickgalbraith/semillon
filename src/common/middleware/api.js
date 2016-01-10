@@ -59,7 +59,9 @@ export const Schemas = {
   POST: postSchema,
   POST_ARRAY: arrayOf(postSchema),
   COMMENT: commentSchema,
-  COMMENT_ARRAY: arrayOf(commentSchema)
+  COMMENT_ARRAY: arrayOf(commentSchema),
+  MEDIA: mediaSchema,
+  MEDIA_ARRAY: arrayOf(mediaSchema)
 }
 
 // A Redux middleware that interprets actions with CALL_API info specified.
