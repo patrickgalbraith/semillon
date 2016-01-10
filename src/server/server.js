@@ -98,7 +98,7 @@ function renderFullPage(html, initialState) {
     <html>
       <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Redux Universal Example</title>
+        <title>${__SITE_NAME__}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/main.css" />
         <link rel="stylesheet" href="/static/font/flaticon/flaticon.css" />
