@@ -1,27 +1,40 @@
 import React, { Component, PropTypes } from 'react'
+import TimeAgo from './TimeAgo'
+
+// id:32390
+// parent:0
+// author:0
+// authorName:"Greg Knox"
+// authorUrl:"http://www.randomnoun.com"
+// authorAvatarUrls:{} 3 keys
+// date:"2013-02-18T19:35:22"
+// content:{} 1 key
+// link:"http://www.pjgalbraith.local/rageagain/#comment-32390"
+// type:"comment"
+// post:783
 
 class Comment extends Component {
   render() {
-    const { comments } = this.props
+    const { comment, onReplyClick } = this.props
     return (
       <div className="comment-body">
         <div className="comment-body-inner">
           <div className="comment-meta">
-            <cite className="comment-author">Thomas</cite>
+            <cite className="comment-author">
+              { comment.authorUrl ?
+                <a href={comment.authorUrl} target="_blank" rel="nofollow">{comment.authorName}</a>
+              : comment.authorName }
+            </cite>
+            {" "}
             <span className="says">said</span>
-            <time dateTime="August 30, 2012 7:13 pm">
-              <a href="/rageagain/#comment-9010">3 years ago</a>
-            </time>
+            {" "}
+            <TimeAgo dateTime={comment.date}/>
           </div>
 
-          <div className="comment-awaiting-mod"></div>
-
-          <div className="comment-content">
-            <p>Content....</p>
-          </div>
+          <div className="comment-content" dangerouslySetInnerHTML={{__html: comment.content.rendered }} />
 
           <div className="comment-reply">
-            <a href="#" rel="nofollow" className="comment-reply-link" ariaLabel="Reply to Thomas">Reply</a>
+            <button onClick={onReplyClick} className="comment-reply-link" ariaLabel="Reply to Thomas">Reply</button>
           </div>
         </div>
       </div>
@@ -30,13 +43,36 @@ class Comment extends Component {
 }
 
 export default class CommentsList extends Component {
+  getCommentClasses(comment, idx) {
+    let classes = [
+      'comment',
+      'depth-1',
+      'comment-author-id-'+comment.author
+    ]
+
+    if(comment.author) {
+      classes.push('byuser')
+
+      // @todo Need to access current post here and match against author
+      classes.push('bypostauthor')
+    }
+
+    if(idx % 2 == 0) {
+      classes.push('even')
+    } else {
+      classes.push('odd')
+    }
+
+    return classes.join(' ')
+  }
+
   render() {
-    const { comments } = this.props
+    const { comments, onReplyClick } = this.props
     return (
       <ol className="comment-list">
         { comments.map((comment, idx) =>
-          <li key={idx} class="comment even thread-even depth-1">
-            <Comment />
+          <li key={comment.id} className={this.getCommentClasses(comment, idx)}>
+            <Comment comment={comment} onReplyClick={onReplyClick} />
           </li>
         )}
       </ol>

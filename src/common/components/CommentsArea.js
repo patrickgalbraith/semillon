@@ -9,6 +9,10 @@ const CommentsAreaTitle = () =>
   </section>
 
 export default class CommentsArea extends Component {
+  onReplyClick() {
+
+  }
+
   render() {
     const { comments } = this.props
     return (
@@ -16,7 +20,7 @@ export default class CommentsArea extends Component {
         <CommentsAreaTitle />
 
         <section className="comments">
-          <CommentsList comments={comments} />
+          <CommentsList comments={comments} onReplyClick={this.onReplyClick.bind(this)} />
         </section>
 
         <CommentsForm />

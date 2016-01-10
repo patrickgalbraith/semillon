@@ -5,13 +5,18 @@ export const COMMENTS_REQUEST = 'COMMENTS_REQUEST'
 export const COMMENTS_SUCCESS = 'COMMENTS_SUCCESS'
 export const COMMENTS_FAILURE = 'COMMENTS_FAILURE'
 
+function isNumeric(item) {
+  return (+item) == item
+}
+
 function fetchCommentsByPost(post, page = 1) {
-  post,
-  page,
+  const postKey = isNumeric(post) ? 'post' : 'post_slug'
   return {
+    post,
+    page,
     [CALL_API]: {
       types: [ COMMENTS_REQUEST, COMMENTS_SUCCESS, COMMENTS_FAILURE ],
-      endpoint: `wp/v2/comments/?post=${post}&page=${page}`,
+      endpoint: `wp/v2/comments/?${postKey}=${post}&page=${page}&order=asc`,
       schema: Schemas.COMMENT_ARRAY
     }
   }

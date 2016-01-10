@@ -1,17 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { get } from 'lodash'
 import PostHeader from '../components/PostHeader'
 import CommentsArea from '../components/CommentsArea'
 import Spinner from '../components/Spinner'
 import { loadPostBySlug } from '../actions/posts'
+import { loadCommentsByPost } from '../actions/comments'
 
 class Post extends Component {
   static fetchData(dispatch, urlParams) {
-    const _loadPost = bindActionCreators(loadPostBySlug, dispatch)
+    const _loadPost     = bindActionCreators(loadPostBySlug, dispatch)
+    const _loadComments = bindActionCreators(loadCommentsByPost, dispatch)
 
     return Promise.all([
-      _loadPost(urlParams.post)
+      _loadPost(urlParams.post),
+      _loadComments(urlParams.post)
     ])
   }
 
@@ -73,7 +77,6 @@ Post.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   const posts = state.entities.posts
-  const comments = state.entities.comments
 
   let post = null
   let postComments = []
@@ -86,11 +89,8 @@ function mapStateToProps(state, ownProps) {
   }
 
   if(post) {
-    for (let key in comments) {
-      if (comments[key].post === post.id) {
-        postComments.push(comments[key])
-      }
-    }
+    const commentIds = get(state, `pagination.comments.${post.slug}.ids[0]`)
+    postComments = commentIds ? commentIds.map((val) => state.entities.comments[val]) : []
   }
 
   return {
