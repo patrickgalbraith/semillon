@@ -46,6 +46,17 @@ export function normalizeApiResponse(schema, json, response) {
     normalize(jsonParsed, schema)
   )
 
+  // Remove keys that start with underscore
+  forOwn(result.entities, (group) => {
+    forOwn(group, (entity) => {
+      forOwn(entity, (item, key) => {
+        if(key.indexOf('_') === 0) {
+          delete entity[key]
+        }
+      })
+    })
+  })
+
   const intOrNull = (val) => val === null ? null : parseInt(val, 10)
 
   result.pagination = {

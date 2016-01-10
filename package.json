@@ -20,7 +20,7 @@
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
     "history": "^1.17.0",
-    "humps": "^1.0.0",
+    "humps": "https://github.com/patrickgalbraith/humps/tarball/73682330b4d4251c9bbd74ba2381f810fbaccc18",
     "isomorphic-fetch": "^2.2.0",
     "lodash": "^3.10.1",
     "normalizr": "^1.4.0",

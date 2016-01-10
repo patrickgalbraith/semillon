@@ -32,11 +32,24 @@ const mediaSchema = new Schema('media')
 const termSchema = new Schema('terms')
 
 postSchema.define({
-  embedded: {
+  _embedded: {
     author: arrayOf(userSchema),
     replies: arrayOf(commentSchema),
     "https://api.w.org/featuredmedia": arrayOf(mediaSchema),
     "https://api.w.org/term": arrayOf(termSchema)
+  }
+})
+
+commentSchema.define({
+  _embedded: {
+    up: arrayOf(postSchema)
+  }
+})
+
+mediaSchema.define({
+  _embedded: {
+    author: arrayOf(userSchema),
+    replies: arrayOf(commentSchema)
   }
 })
 
