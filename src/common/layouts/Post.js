@@ -65,7 +65,7 @@ class Post extends Component {
           <section className="post-body" itemProp="articleBody" dangerouslySetInnerHTML={{__html: content }} />
         </article>
 
-        <CommentsArea comments={comments} />
+        <CommentsArea post={post} comments={comments} />
       </div>
     )
   }

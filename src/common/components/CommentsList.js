@@ -1,18 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import TimeAgo from './TimeAgo'
 
-// id:32390
-// parent:0
-// author:0
-// authorName:"Greg Knox"
-// authorUrl:"http://www.randomnoun.com"
-// authorAvatarUrls:{} 3 keys
-// date:"2013-02-18T19:35:22"
-// content:{} 1 key
-// link:"http://www.pjgalbraith.local/rageagain/#comment-32390"
-// type:"comment"
-// post:783
-
 class Comment extends Component {
   render() {
     const { comment, onReplyClick } = this.props
@@ -43,16 +31,20 @@ class Comment extends Component {
 }
 
 export default class CommentsList extends Component {
+  onReplyClick(event) {
+    event.preventDefault()
+    this.props.onReplyClick(this.props.comment)
+  }
+
   getCommentClasses(comment, idx) {
     let classes = [
       'comment',
-      'depth-1',
+      'depth-'+(comment.parent ? 1 : 0),
       'comment-author-id-'+comment.author
     ]
 
     if(comment.author) {
       classes.push('byuser')
-
       // @todo Need to access current post here and match against author
       classes.push('bypostauthor')
     }
@@ -67,12 +59,12 @@ export default class CommentsList extends Component {
   }
 
   render() {
-    const { comments, onReplyClick } = this.props
+    const { comments } = this.props
     return (
       <ol className="comment-list">
         { comments.map((comment, idx) =>
           <li key={comment.id} className={this.getCommentClasses(comment, idx)}>
-            <Comment comment={comment} onReplyClick={onReplyClick} />
+            <Comment comment={comment} onReplyClick={this.onReplyClick.bind(this)} />
           </li>
         )}
       </ol>

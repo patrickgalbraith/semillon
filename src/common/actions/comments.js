@@ -34,3 +34,14 @@ export function loadCommentsByPost(post, page = 1) {
     return dispatch(fetchCommentsByPost(post, page))
   }
 }
+
+export const COMMENTS_CREATE_REQUEST = 'COMMENTS_CREATE_REQUEST'
+export const COMMENTS_CREATE_SUCCESS = 'COMMENTS_CREATE_SUCCESS'
+export const COMMENTS_CREATE_FAILURE = 'COMMENTS_CREATE_FAILURE'
+
+export function createComment(commentData) {
+  return (dispatch, getState) => {
+    console.log('createComment', commentData)
+    return null
+  }
+}

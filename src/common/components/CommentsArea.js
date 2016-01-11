@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import CommentsList from '../components/CommentsList'
 import CommentsForm from '../components/CommentsForm'
+import { createComment } from '../actions/comments'
 
 const CommentsAreaTitle = () =>
   <section className="section-title">
@@ -9,26 +12,54 @@ const CommentsAreaTitle = () =>
   </section>
 
 export default class CommentsArea extends Component {
-  onReplyClick() {
+  constructor() {
+    super()
+    this.state = {
+      replyToComment: 0
+    }
+  }
 
+  onReplyClick(comment) {
+    this.setState({
+      replyToComment: comment.id
+    })
   }
 
   render() {
-    const { comments } = this.props
+    const { replyToComment } = this.state
+    const { comments, post, commentFormSubmit } = this.props
+
     return (
       <div className="comments-area">
-        <CommentsAreaTitle />
+        { comments.length > 0 ?
+          <CommentsAreaTitle />
+        : null}
 
-        <section className="comments">
-          <CommentsList comments={comments} onReplyClick={this.onReplyClick.bind(this)} />
-        </section>
+        { comments.length > 0 ?
+          <section className="comments">
+            <CommentsList comments={comments} onReplyClick={this.onReplyClick.bind(this)} />
+          </section>
+        : null}
 
-        <CommentsForm />
+        <CommentsForm commentParent={post.id} onSubmit={commentFormSubmit} />
       </div>
     )
   }
 }
 
 CommentsArea.propTypes = {
-  comments: PropTypes.array.isRequired
+  post: PropTypes.object.isRequired,
+  comments: PropTypes.array.isRequired,
+  commentFormSubmit: PropTypes.func.isRequired,
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    commentFormSubmit: bindActionCreators(createComment, dispatch)
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CommentsArea)

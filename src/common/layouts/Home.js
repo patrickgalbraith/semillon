@@ -55,7 +55,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     posts,
-    totalPages: get(state, 'pagination.posts.archive.totalPages')
+    totalPages: get(state, 'pagination.posts.archive.totalPages', 1)
   }
 }
 
