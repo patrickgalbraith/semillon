@@ -27,8 +27,8 @@ export default class CommentsForm extends Component {
 
   isValid() {
     const required = ['comment', 'author', 'email']
-    return required.reduce((prev, key) => {
-      return prev && this.state[key].length > 0
+    return required.every((key) => {
+      return this.state[key].length > 0
     })
   }
 

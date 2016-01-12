@@ -2,8 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import TimeAgo from './TimeAgo'
 
 class Comment extends Component {
+  onReplyClick(event) {
+    event.preventDefault()
+    this.props.onReplyClick(this.props.comment)
+  }
+
   render() {
-    const { comment, onReplyClick } = this.props
+    const { comment } = this.props
     return (
       <div className="comment-body">
         <div className="comment-body-inner">
@@ -22,7 +27,7 @@ class Comment extends Component {
           <div className="comment-content" dangerouslySetInnerHTML={{__html: comment.content.rendered }} />
 
           <div className="comment-reply">
-            <button onClick={onReplyClick} className="comment-reply-link" ariaLabel="Reply to Thomas">Reply</button>
+            <button onClick={this.onReplyClick.bind(this)} className="comment-reply-link" ariaLabel="Reply to Thomas">Reply</button>
           </div>
         </div>
       </div>
@@ -31,11 +36,6 @@ class Comment extends Component {
 }
 
 export default class CommentsList extends Component {
-  onReplyClick(event) {
-    event.preventDefault()
-    this.props.onReplyClick(this.props.comment)
-  }
-
   getCommentClasses(comment, idx) {
     let classes = [
       'comment',
@@ -59,12 +59,12 @@ export default class CommentsList extends Component {
   }
 
   render() {
-    const { comments } = this.props
+    const { comments, onReplyClick } = this.props
     return (
       <ol className="comment-list">
         { comments.map((comment, idx) =>
           <li key={comment.id} className={this.getCommentClasses(comment, idx)}>
-            <Comment comment={comment} onReplyClick={this.onReplyClick.bind(this)} />
+            <Comment comment={comment} onReplyClick={onReplyClick} />
           </li>
         )}
       </ol>

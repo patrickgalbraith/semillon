@@ -39,6 +39,19 @@ export const COMMENTS_CREATE_REQUEST = 'COMMENTS_CREATE_REQUEST'
 export const COMMENTS_CREATE_SUCCESS = 'COMMENTS_CREATE_SUCCESS'
 export const COMMENTS_CREATE_FAILURE = 'COMMENTS_CREATE_FAILURE'
 
+function dispatchCreateComment(post, page = 1) {
+  const postKey = isNumeric(post) ? 'post' : 'post_slug'
+  return {
+    post,
+    page,
+    [CALL_API]: {
+      types: [ COMMENTS_REQUEST, COMMENTS_SUCCESS, COMMENTS_FAILURE ],
+      endpoint: `wp/v2/comments/?${postKey}=${post}&page=${page}&order=asc`,
+      schema: Schemas.COMMENT_ARRAY
+    }
+  }
+}
+
 export function createComment(commentData) {
   return (dispatch, getState) => {
     console.log('createComment', commentData)

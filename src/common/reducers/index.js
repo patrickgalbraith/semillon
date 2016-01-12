@@ -19,7 +19,7 @@ const pagination = combineReducers({
   }),
 
   comments: paginate({
-    mapActionToKey: action => action.post ? action.post : 'archive',
+    mapActionToKey: action => action.post ? `${action.post}` : 'archive',
     types: [
       COMMENTS_REQUEST,
       COMMENTS_SUCCESS,
