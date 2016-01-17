@@ -39,7 +39,8 @@
       display: none;
     }
 
-    textarea[name="comment"] {
+    textarea[name="comment"],
+    textarea[name="content"] {
       width: 100%;
       border: 1px solid #b0b0b0;
       padding: 4px 6px;
@@ -138,6 +139,12 @@ ol.comment-list {
 
       .comment-author {
         font-size: 1.3em;
+      }
+
+      p.to {
+        font-size: 1.4rem;
+        margin-top: 4px;
+        font-style: italic;
       }
 
       .comment-edit-link {

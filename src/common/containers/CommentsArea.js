@@ -25,18 +25,29 @@ export default class CommentsArea extends Component {
 
   constructor() {
     super()
-    this.state = {
-      replyToComment: 0
-    }
+    this.state = { replyToComment: 0 }
   }
 
   componentWillMount() {
     this.constructor.fetchData(this.props.dispatch, +this.props.post.id)
   }
 
+  commentFormSubmit(commentData) {
+    const _createComment = bindActionCreators(createComment, this.props.dispatch)
+    commentData.post = +this.props.post.id
+
+    if(this.state.replyToComment) {
+      commentData.parent = this.state.replyToComment.id
+    }
+
+    //commentData.date = new Date()
+
+    return _createComment(commentData)
+  }
+
   onReplyClick(comment) {
     this.setState({
-      replyToComment: comment.id
+      replyToComment: comment
     })
 
     const element = document.querySelector('.comment-respond')
@@ -44,30 +55,37 @@ export default class CommentsArea extends Component {
     if (element) {
       scrollToElement(element, 400)
     }
+  }
+
+  onCancelReplyClick() {
+    this.setState({
+      replyToComment: null
     })
   }
 
   render() {
     const { replyToComment } = this.state
-    const { comments, fetching, commentFormSubmit } = this.props
+    const { comments, fetching } = this.props
+    const onCancelReply = this.onCancelReplyClick.bind(this)
+    const commentFormSubmit = this.commentFormSubmit.bind(this)
 
     return (
       <div className="comments-area">
         { comments.length > 0 ?
           <CommentsAreaTitle />
-        : null}
+        : null }
 
         { comments.length > 0 && !fetching ?
           <section className="comments">
             <CommentsList comments={comments} onReplyClick={this.onReplyClick.bind(this)} />
           </section>
-        : null}
+        : null }
 
         { fetching ?
           <p>COMMENTS LOADING...</p>
         : null }
 
-        <CommentsForm commentParent={replyToComment} onSubmit={commentFormSubmit} />
+        <CommentsForm commentParent={replyToComment} onCancelReply={onCancelReply} onSubmit={commentFormSubmit} />
       </div>
     )
   }
@@ -75,7 +93,8 @@ export default class CommentsArea extends Component {
 
 CommentsArea.propTypes = {
   post: PropTypes.object.isRequired,
-  commentFormSubmit: PropTypes.func.isRequired,
+  comments: PropTypes.array.isRequired,
+  fetching: PropTypes.bool
 }
 
 function mapStateToProps(state, ownProps) {
@@ -99,8 +118,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
-    commentFormSubmit: bindActionCreators(createComment, dispatch)
+    dispatch
   }
 }
 

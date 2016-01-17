@@ -8,7 +8,11 @@ class Comment extends Component {
   }
 
   render() {
-    const { comment } = this.props
+    const { comment, parent } = this.props
+
+    const ldquo = "\u201C"
+    const rdquo = "\u201D"
+
     return (
       <div className="comment-body">
         <div className="comment-body-inner">
@@ -22,6 +26,9 @@ class Comment extends Component {
             <span className="says">said</span>
             {" "}
             <TimeAgo dateTime={comment.date}/>
+            { parent ?
+              <p className="to">in reply to {ldquo}{parent.authorName}{rdquo}</p>
+            : null }
           </div>
 
           <div className="comment-content" dangerouslySetInnerHTML={{__html: comment.content.rendered }} />
@@ -45,8 +52,11 @@ export default class CommentsList extends Component {
 
     if(comment.author) {
       classes.push('byuser')
+
       // @todo Need to access current post here and match against author
-      classes.push('bypostauthor')
+      if(comment.author === 1) {
+        classes.push('bypostauthor')
+      }
     }
 
     if(idx % 2 == 0) {
@@ -58,13 +68,32 @@ export default class CommentsList extends Component {
     return classes.join(' ')
   }
 
+  getParentComment(id) {
+    const { comments}  = this.props
+
+    if(!id) {
+      return null
+    }
+
+    for (let i = comments.length - 1; i >= 0; i--) {
+      if(comments[i].id === id) {
+        return comments[i]
+      }
+    }
+
+    return null
+  }
+
   render() {
     const { comments, onReplyClick } = this.props
     return (
       <ol className="comment-list">
         { comments.map((comment, idx) =>
           <li key={comment.id} className={this.getCommentClasses(comment, idx)}>
-            <Comment comment={comment} onReplyClick={onReplyClick} />
+            <Comment
+              comment={comment}
+              parent={this.getParentComment(comment.parent)}
+              onReplyClick={onReplyClick} />
           </li>
         )}
       </ol>

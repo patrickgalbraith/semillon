@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 
 export default class CommentsForm extends Component {
-  constructor() {
-    super()
-    this.state = {
-      comment: '',
-      author: '',
-      email: '',
-      url: ''
-    }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  onCancelReply(event) {
+    event.preventDefault()
+    this.props.onCancelReply()
   }
 
   onSubmit(event) {
@@ -19,14 +20,8 @@ export default class CommentsForm extends Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
-  }
-
   isValid() {
-    const required = ['comment', 'author', 'email']
+    const required = ['content', 'author_name', 'author_email']
     return required.every((key) => {
       return this.state[key].length > 0
     })
@@ -36,21 +31,26 @@ export default class CommentsForm extends Component {
     const { commentParent } = this.props
 
     const onSubmit = this.onSubmit.bind(this)
+    const onCancelReply = this.onCancelReply.bind(this)
     const handleChange = this.handleChange.bind(this)
+
+    const ldquo = "\u201C"
+    const rdquo = "\u201D"
+
+    let commentTitle = <h3 className="comment-reply-title">Leave a Reply</h3>
+
+    if(commentParent) {
+      commentTitle = (
+        <h3 className="comment-reply-title">
+          { `Replying to ${ldquo}${commentParent.authorName}${rdquo}` }
+          <button onClick={onCancelReply}>Cancel reply</button>
+        </h3>
+      )
+    }
 
     return (
       <div className="comment-respond">
-        <h3 className="comment-reply-title">
-          <span>
-            Leave a Reply
-            { commentParent ?
-              <small>
-                {' '}
-                <a href="#" rel="nofollow">Cancel reply</a>
-              </small>
-            : null}
-          </span>
-        </h3>
+        { commentTitle }
 
         <form className="comment-form" onSubmit={onSubmit}>
           <p className="comment-notes">
@@ -59,45 +59,41 @@ export default class CommentsForm extends Component {
           <p className="comment-form-comment">
             <label htmlFor="comment">Comment</label>
             <textarea
-              name="comment"
+              name="content"
               rows="8"
               cols="45"
               required
               ariaRequired="true"
               placeholder="Type your comment here... &lt;code&gt; Put code inside a code tag like this. &lt;/code&gt;"
-              value={this.state.comment}
               onChange={handleChange} />
           </p>
           <p className="comment-form-author">
             <label htmlFor="author">Name <span className="required">*</span></label>
             <input
-              name="author"
+              name="author_name"
               type="text"
               size="30"
               required
               ariaRequired="true"
-              onChange={handleChange}
-              value={this.state.author} />
+              onChange={handleChange} />
           </p>
           <p className="comment-form-email">
             <label htmlFor="email">Email <span className="required">*</span></label>
             <input
-              name="email"
+              name="author_email"
               type="email"
               size="30"
               required
               ariaRequired="true"
-              onChange={handleChange}
-              value={this.state.email} />
+              onChange={handleChange} />
           </p>
           <p className="comment-form-url">
-            <label htmlFor="url">Website</label>
+            <label htmlFor="author_url">Website</label>
             <input
               name="url"
               size="30"
               type="url"
-              onChange={handleChange}
-              value={this.state.url} />
+              onChange={handleChange} />
           </p>
           <p className="form-submit">
             <input className="submit" name="submit" type="submit" value="Post Comment" />
