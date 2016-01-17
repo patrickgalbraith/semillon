@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { scrollToElement } from '../helpers/scrollTo'
 
 export default class RespondLink extends Component {
   scrollToCommentsForm(event) {
@@ -7,7 +8,7 @@ export default class RespondLink extends Component {
     const element = document.querySelector('.comment-respond')
 
     if (element) {
-      element.scrollIntoView();
+      scrollToElement(element)
     }
   }
 

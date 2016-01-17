@@ -6,6 +6,7 @@ import CommentsList from '../components/CommentsList'
 import CommentsForm from '../components/CommentsForm'
 import RespondLink from '../components/RespondLink'
 import { loadCommentsByPost, createComment } from '../actions/comments'
+import { scrollToElement } from '../helpers/scrollTo'
 
 const CommentsAreaTitle = () =>
   <section className="section-title">
@@ -36,6 +37,13 @@ export default class CommentsArea extends Component {
   onReplyClick(comment) {
     this.setState({
       replyToComment: comment.id
+    })
+
+    const element = document.querySelector('.comment-respond')
+
+    if (element) {
+      scrollToElement(element, 400)
+    }
     })
   }
 
