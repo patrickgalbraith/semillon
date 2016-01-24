@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { routeReducer } from 'redux-simple-router'
 import menu from './menu'
 import paginate from './paginate'
+import forms from './forms'
 import { entities, errorMessage } from './api'
 
 import { POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE } from '../actions/posts'
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   menu,
   entities,
   pagination,
+  forms,
   errorMessage,
   routing: routeReducer
 })

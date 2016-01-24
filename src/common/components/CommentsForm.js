@@ -28,7 +28,7 @@ export default class CommentsForm extends Component {
   }
 
   render() {
-    const { commentParent } = this.props
+    const { commentParent, pending } = this.props
 
     const onSubmit = this.onSubmit.bind(this)
     const onCancelReply = this.onCancelReply.bind(this)
@@ -64,6 +64,7 @@ export default class CommentsForm extends Component {
               cols="45"
               required
               ariaRequired="true"
+              disabled={pending}
               placeholder="Type your comment here... &lt;code&gt; Put code inside a code tag like this. &lt;/code&gt;"
               onChange={handleChange} />
           </p>
@@ -75,6 +76,7 @@ export default class CommentsForm extends Component {
               size="30"
               required
               ariaRequired="true"
+              disabled={pending}
               onChange={handleChange} />
           </p>
           <p className="comment-form-email">
@@ -85,6 +87,7 @@ export default class CommentsForm extends Component {
               size="30"
               required
               ariaRequired="true"
+              disabled={pending}
               onChange={handleChange} />
           </p>
           <p className="comment-form-url">
@@ -93,10 +96,16 @@ export default class CommentsForm extends Component {
               name="url"
               size="30"
               type="url"
+              disabled={pending}
               onChange={handleChange} />
           </p>
           <p className="form-submit">
-            <input className="submit" name="submit" type="submit" value="Post Comment" />
+            <input
+              className="submit"
+              name="submit"
+              type="submit"
+              disabled={pending}
+              value="Post Comment" />
           </p>
         </form>
       </div>

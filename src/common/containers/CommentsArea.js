@@ -40,8 +40,6 @@ export default class CommentsArea extends Component {
       commentData.parent = this.state.replyToComment.id
     }
 
-    //commentData.date = new Date()
-
     return _createComment(commentData)
   }
 
@@ -65,7 +63,7 @@ export default class CommentsArea extends Component {
 
   render() {
     const { replyToComment } = this.state
-    const { comments, fetching } = this.props
+    const { comments, fetching, pending } = this.props
     const onCancelReply = this.onCancelReplyClick.bind(this)
     const commentFormSubmit = this.commentFormSubmit.bind(this)
 
@@ -85,7 +83,7 @@ export default class CommentsArea extends Component {
           <p>COMMENTS LOADING...</p>
         : null }
 
-        <CommentsForm commentParent={replyToComment} onCancelReply={onCancelReply} onSubmit={commentFormSubmit} />
+        <CommentsForm commentParent={replyToComment} onCancelReply={onCancelReply} pending={pending} onSubmit={commentFormSubmit} />
       </div>
     )
   }
@@ -108,11 +106,13 @@ function mapStateToProps(state, ownProps) {
   const postId = ownProps.post.id
   const ids = get(state, `pagination.comments.${postId}.ids[0]`)
   const fetching = get(state, `pagination.comments.${postId}.isFetching`)
+  const pending = get(state, `forms.commentsArea.${postId}.isPending`)
   const comments = ids ? ids.map((val) => state.entities.comments[val]) : []
 
   return {
     comments,
-    fetching
+    fetching,
+    pending
   }
 }
 
